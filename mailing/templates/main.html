@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <ul class="list-group">
+        <li class="list-group-item">Количество рассылок: {{ count_of_newsletter }}</li>
+        <li class="list-group-item">Количество активных рассылок: {{ count_of_active }}</li>
+        <li class="list-group-item">Количество уникальных клиентов для рассылок: {{ count_of_unique_clients }}</li>
+    </ul>
+</div>
+
+{% endblock %}

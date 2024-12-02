@@ -110,3 +110,15 @@ class MailingUpdateView(UpdateView):
 class MailingDeleteView(DeleteView):
     model = Settings
     success_url = reverse_lazy('mailing:list_mailing')
+
+class MainView(TemplateView):
+    template_name = 'main.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        work_status = ['created', 'launched']
+        context_data['count_of_newsletter'] = Settings.objects.all().count()
+        context_data['count_of_active'] = Settings.objects.filter(status__in=work_status).count()
+        context_data['count_of_unique_clients'] = len(set(Client.objects.all()))
+
+        return context_data
