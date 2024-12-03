@@ -1,15 +1,10 @@
 import os.path
 import smtplib
-from datetime import datetime
 from email.mime.image import MIMEImage
-import random
-
 from apscheduler.schedulers.background import BackgroundScheduler
 from django.conf import settings
-
 from django.core.mail import send_mail, EmailMessage
 from django.utils import timezone
-
 from mailing.models import Settings, Attempt
 
 scheduler = BackgroundScheduler(timezone=settings.TIME_ZONE)
