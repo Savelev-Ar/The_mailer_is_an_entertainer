@@ -39,7 +39,7 @@ class RegisterView(CreateView):
 class ProfileView(UpdateView):
     model = User
     form_class = UserProfileForm
-    success_url = reverse_lazy('users:profile')
+    success_url = reverse_lazy('user:profile')
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -49,15 +49,9 @@ def email_verification(request, token):
     user = get_object_or_404(User, token=token)
     user.is_active = True
     user.save()
-    return redirect(reverse("users:login"))
+    return redirect(reverse('user:login'))
 
 def reset(request):
-    context = {
-        'success_message': 'Пароль успешно сброшен, '
-                           'Новый пароль был отправлен '
-                           'на Ваш адрес электронный почты'
-    }
-
     if request.method == 'POST':
         email = request.POST.get('email')
         user = get_object_or_404(User, email=email)
@@ -72,7 +66,8 @@ def reset(request):
                     f'Ваш новый пароль: {password}',
             from_email=EMAIL_HOST_USER,
             recipient_list=[user.email],
+            fail_silently=False
         )
-        return render(request, 'users/reset.html', context)
+        return redirect(reverse('user:login'))
     else:
-        return render(request, 'users/reset.html')
+        return render(request, 'user/reset.html')

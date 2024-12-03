@@ -13,16 +13,15 @@
                 <div class="card-body">
                     {% if success_message %}
                     <p>{{ success_message }}</p>
-                    <a href="{% url 'users:login' %}" >Войти в личный кабинет</a>
+                    <a href="{% url 'user:login' %}">Войти в личный кабинет</a>
                     {% else %}
                     <form class="row" method="post">
                         {% csrf_token %}
-                        <input type="email" name="email"  class="form-control" id="exampleInputEmail1">
+                        <input type="email" name="email" class="form-control" id="exampleInputEmail1">
                         <div id="emailHelp" class="form-text">Введите адрес электронной почты</div>
-
-                    <button type="submit">
-                        Восстановить пароль
-                    </button>
+                        <button type="submit">
+                            Восстановить пароль
+                        </button>
                         {% endif %}
                 </div>
                 <div class="card-footer"></div>
@@ -30,7 +29,6 @@
         </div>
     </form>
 </div>
-</div>
-</div>
+
 
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from user.models import User
 
 class Client(models.Model):
     name = models.CharField(
@@ -10,6 +10,14 @@ class Client(models.Model):
     email = models.EmailField(
         unique=True,
         verbose_name='контактный email'
+    )
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='clients',
+        verbose_name="пользователь",
+        blank=True,
+        null=True
     )
     comment = models.CharField(
         max_length=200,
@@ -26,6 +34,9 @@ class Client(models.Model):
         verbose_name_plural = 'клиенты'
         ordering = ['name']
 
+    permissions = [
+        ('can_disable_mailing', 'Can disable mailing'),
+    ]
 
 class Message(models.Model):
     topic = models.CharField(
@@ -72,7 +83,8 @@ class Settings(models.Model):
         max_length=10,
         choices=STATUS_SET,
         default=CREATED,
-        verbose_name='статус')
+        verbose_name='статус'
+    )
     date_start = models.DateTimeField(
         default=timezone.now,
         blank=True,
@@ -93,8 +105,16 @@ class Settings(models.Model):
         Message,
         on_delete=models.CASCADE,
         related_name='message',
-        verbose_name="сообщение")
-
+        verbose_name="сообщение"
+    )
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='newsletters',
+        verbose_name="пользователь",
+        blank=True,
+        null=True
+    )
     def __str__(self):
         return f'{self.message}'
 
