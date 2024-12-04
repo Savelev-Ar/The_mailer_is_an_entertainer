@@ -151,3 +151,15 @@ EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', False) == 'True'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
+
+# caching settings
+
+CACHE_ENABLED = os.getenv('CACHE_ENABLED', False) == 'True'
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('LOCATION'),
+        }
+    }

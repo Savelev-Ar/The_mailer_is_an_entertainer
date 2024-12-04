@@ -143,6 +143,7 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
     login_url = '/user/login/'
     success_url = reverse_lazy('mailing:list_mailing')
 
+@method_decorator(cache_page(60 * 1), name='dispatch')
 class MainView(TemplateView):
     template_name = 'main.html'
 
