@@ -1,6 +1,10 @@
+APScheduler==3.11.0
 asgiref==3.8.1
+async-timeout==5.0.1
 Django==4.2.16
+psycopg2-binary==2.9.10
+python-dotenv==1.0.1
+redis==5.2.0
 sqlparse==0.5.1
 typing_extensions==4.12.2
-dotenv==1.0.1
-psycopg2==2.9.10
+tzlocal==5.2
