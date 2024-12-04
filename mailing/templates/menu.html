@@ -1,28 +1,27 @@
 <div class="container text-center">
     <div class="row">
-        <div class="col">
+        <div class="col-11">
             <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-                <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
+                <h5 class="my-0 mr-md-auto font-weight-normal">SkyMailing</h5>
                 <nav class="ms-5">
+                    <a class="p-2 btn btn-outline-primary" href="/">Главная</a>
+                    <a class="p-2 btn btn-outline-primary" href="/mailing/report">Отчет работы</a>
                     <a class="p-2 btn btn-outline-primary" href="/client/">Каталог клиентов</a>
                     <a class="p-2 btn btn-outline-primary" href="/message/">Каталог сообщений</a>
                     <a class="p-2 btn btn-outline-primary" href="/mailing/">Каталог рассылок</a>
-                    <a class="p-2 btn btn-outline-primary" href="/category_list/">Категории</a>
                 </nav>
             </div>
         </div>
-
-        <div class="col">
+        <div class="col-1">
             <ul class="list-unstyled">
                 {% if user.is_authenticated %}
-                <li><a href="{% url 'users:profile' %}">Профиль </a></li>
-                <li><a href="{% url 'users:logout' %}">Выйти</a></li>
+                <li><a href="{% url 'user:profile' %}">Профиль </a></li>
+                <li><a href="{% url 'user:logout' %}">Выйти</a></li>
                 {% else %}
-                <li><a href="">Войти</a></li>
-                <li><a href="">Регистрация</a></li>
+                <li><a href="{% url 'user:login' %}">Войти</a></li>
+                <li><a href="{% url 'user:register' %}">Регистрация</a></li>
                 {% endif %}
             </ul>
         </div>
-
     </div>
 </div>

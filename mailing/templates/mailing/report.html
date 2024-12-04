@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="mb-5">Отчет проведенных рассылок</h4>
+<h6>Выберите период</h6>
+<form class="row" action="" method="get">
+    <div class="col-md-6">
+        <input id="start" type="datetime-local" name="start_date" required>
+        <input id="end" type="datetime-local" name="end_date" required>
+    </div>
+    <button type="submit" class="btn btn-success mb-3">Подтвердить</button>
+    {% if start_date %}
+    <p>Рассылки в диапазоне дат от {{ start_date }} до {{ end_date }}</p>
+    {% endif %}
+</form>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Номер</th>
+        <th scope="col">Дата и время попытки</th>
+        <th scope="col">Сообщение</th>
+        <th scope="col">Статус попытки</th>
+        <th scope="col">Ответ почтового сервера</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+    <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ object.last_datetime }}</td>
+        <td>{{ object.settings }}</td>
+        <td>
+            {% if object.is_successful %}
+            Успешно
+            {% else %}
+            Не успешно
+            {% endif %}
+        </td>
+        <td>{{ object.response }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
