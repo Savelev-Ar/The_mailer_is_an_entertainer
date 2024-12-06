@@ -1,8 +1,10 @@
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DetailView, DeleteView
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from mailing.models import Client, Message, Settings, Attempt
 from mailing.forms import MailingForm, MessageForm, ClientForm
-from django.contrib.auth.mixins import LoginRequiredMixin
 from .mailing import add_job_to_scheduler
 
 
