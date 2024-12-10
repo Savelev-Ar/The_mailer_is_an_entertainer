@@ -48,6 +48,14 @@ class Message(models.Model):
     body = models.TextField(
         verbose_name='сообщение'
     )
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='messages',
+        verbose_name="пользователь",
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return self.topic
