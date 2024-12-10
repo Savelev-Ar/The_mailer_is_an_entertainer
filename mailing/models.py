@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from user.models import User
 
+
 class Client(models.Model):
     name = models.CharField(
         max_length=100,
@@ -37,6 +38,7 @@ class Client(models.Model):
     permissions = [
         ('can_disable_mailing', 'Can disable mailing'),
     ]
+
 
 class Message(models.Model):
     topic = models.CharField(
@@ -115,6 +117,7 @@ class Settings(models.Model):
         blank=True,
         null=True
     )
+
     def __str__(self):
         return f'{self.message}'
 

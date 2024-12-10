@@ -51,6 +51,7 @@ def email_verification(request, token):
     user.save()
     return redirect(reverse('user:login'))
 
+
 def reset(request):
     if request.method == 'POST':
         email = request.POST.get('email')
