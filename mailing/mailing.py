@@ -3,7 +3,7 @@ import smtplib
 from email.mime.image import MIMEImage
 from apscheduler.schedulers.background import BackgroundScheduler
 from django.conf import settings
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import EmailMessage
 from django.utils import timezone
 from mailing.models import Settings, Attempt
 
@@ -12,11 +12,11 @@ interval_dict = {'daily': 1, 'weekly': 7, 'monthly': 30}
 
 
 def start_scheduler():
-    '''
+    """
     Функция выбирает из базы все действующие и актуальные рассылки
     и на каждую устанавливает задачу планировщику
     :return:
-    '''
+    """
     # if scheduler.running:
     #     return None
     work_status = ['created', 'launched']
@@ -28,8 +28,10 @@ def start_scheduler():
         if not last_attempt:  # если рассылка только создана (попыток нет) ставим планировщику задачу на текущее время
             scheduler.add_job(send_mailing, 'interval', days=interval, next_run_time=mailing.date_start, args=[mailing])
         else:  # определяем время запуска задачи для планировщика
-            lost_days = (current_datetime - last_attempt.date_attempt).days  # переменная определяет сколько дней рассылки пропущено
-            days_to_send = interval - lost_days % interval  # определяем сколько дней от последней попытки до следующей
+            # переменная определяет сколько дней рассылки пропущено
+            lost_days = (current_datetime - last_attempt.date_attempt).days
+            # определяем сколько дней от последней попытки до следующей
+            days_to_send = interval - lost_days % interval
             next_run_time = last_attempt.date_attempt + timezone.timedelta(days=lost_days + days_to_send)
             scheduler.add_job(send_mailing, 'interval', days=interval, next_run_time=next_run_time, args=[mailing])
     print(scheduler)
@@ -38,12 +40,12 @@ def start_scheduler():
 
 
 def add_job_to_scheduler(mailing):
-    '''
+    """
     Функция устанавливает задачу планировщику в случае создания новой
     или редактирования активной рассылки
     :param mailing:
     :return:
-    '''
+    """
     interval = interval_dict.get(mailing.frequency)
     # если планировщик запущен, ставим задачу, иначе, запускаем его
     if scheduler.running:
@@ -53,16 +55,16 @@ def add_job_to_scheduler(mailing):
 
 
 def send_mailing(mailing):
-    '''
+    """
     Функция формирует сообщение и отправляет списку клиентов
     :param mailing:
     :return:
-    '''
+    """
     message = EmailMessage(subject=mailing.message.topic,
                            body=mailing.message.body,
                            from_email=None,
                            to=[client.email for client in mailing.clients.all()])
-    if mailing.message.media: # если в сообщении есть изображение, прикладываем к телу письма
+    if mailing.message.media:  # если в сообщении есть изображение, прикладываем к телу письма
         filename = mailing.message.media.file.name
         with open(filename, 'rb') as f:
             img_data = f.read()
